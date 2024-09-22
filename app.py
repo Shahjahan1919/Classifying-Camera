@@ -1,11 +1,4 @@
-'''
-Camera Classifier v0.1 Alpha
-Copyright (c) NeuralNine
 
-Instagram: @neuralnine
-YouTube: NeuralNine
-Website: www.neuralnine.com
-'''
 
 import tkinter as tk
 from tkinter import simpledialog
@@ -14,6 +7,7 @@ import os
 import PIL.Image, PIL.ImageTk
 import model
 import camera
+from PIL import Image, ImageTk
 
 class App:
 
@@ -72,6 +66,7 @@ class App:
     def auto_predict_toggle(self):
         self.auto_predict = not self.auto_predict
 
+
     def save_for_class(self, class_num):
         ret, frame = self.camera.get_frame()
         if not os.path.exists("1"):
@@ -80,11 +75,12 @@ class App:
             os.mkdir("2")
 
         cv.imwrite(f'{class_num}/frame{self.counters[class_num-1]}.jpg', cv.cvtColor(frame, cv.COLOR_RGB2GRAY))
-        img = PIL.Image.open(f'{class_num}/frame{self.counters[class_num - 1]}.jpg')
-        img.thumbnail((150, 150), PIL.Image.ANTIALIAS)
+        img = Image.open(f'{class_num}/frame{self.counters[class_num - 1]}.jpg')
+        img.thumbnail((150, 150), Image.LANCZOS)
         img.save(f'{class_num}/frame{self.counters[class_num - 1]}.jpg')
 
         self.counters[class_num - 1] += 1
+
 
     def reset(self):
         for folder in ['1', '2']:
